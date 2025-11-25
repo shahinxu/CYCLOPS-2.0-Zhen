@@ -11,7 +11,7 @@ import Flux: onehot, onehotbatch, mse
 
 const mouse_acrophases = [0, 0.0790637050481884, 0.151440116812406, 2.29555301890004, 2.90900605826091, 2.98706493493206, 2.99149022777511, 3.00769248308471, 3.1219769314524, 3.3058682224604, 3.31357155959037, 3.42557704861225, 3.50078722833753, 3.88658015146741, 4.99480367551318, 5.04951134876313, 6.00770260397838]
 const mouse_gene_symbol = ["Arntl", "Clock", "Npas2", "Nr1d1", "Bhlhe41", "Nr1d2", "Dbp", "Ciart", "Per1", "Per3", "Tef", "Hlf", "Cry2", "Per2", "Cry1", "Rorc", "Nfil3"]
-const human_homologue_gene_symbol = uppercase.(mouse_gene_symbol)
+const human_homologue_gene_symbol = mouse_gene_symbol
 const subfolders = ["Plots", "Fits", "Models", "Parameters"]
 
 #############

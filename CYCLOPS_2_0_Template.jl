@@ -1,7 +1,7 @@
 using DataFrames, Statistics, StatsBase, LinearAlgebra, MultivariateStats, PyPlot, Distributed, Random, CSV, Revise, Distributions, Dates, MultipleTesting
 
 base_path = "/home/azureuser/CYCLOPS-2.0"
-data_path = "/home/azureuser/CYCLOPS-2.0/data/GSE261698_Aged_Astrocyte"
+data_path = "/home/azureuser/CYCLOPS-2.0/data/GSE261698_APP_Microglia"
 path_to_cyclops = joinpath(base_path, "CYCLOPS.jl")
 output_path = joinpath(base_path, "output")
 
@@ -98,7 +98,7 @@ training_parameters = Dict(:regex_cont => r".*_C",			# What is the regex match f
 
 Distributed.addprocs(length(Sys.cpu_info()))
 @everywhere begin
-    path_to_cyclops = "/home/xuzhen/CYCLOPS-2.0/CYCLOPS.jl"
+    path_to_cyclops = "/home/azureuser/CYCLOPS-2.0/CYCLOPS.jl"
     include(path_to_cyclops)
 end
 
