@@ -3754,7 +3754,7 @@ function Align(dataFile1::DataFrame, dataFile2::DataFrame, Fit_Output1::DataFram
 	my_info("FIT OUTPUT SAVED. SAVING METRIC CORRELATIONS TO EIGENGENES.")
 	CSV.write(joinpath(fit_path_l, "Metric_Correlation_to_Eigengenes_$(todays_date).csv"), Eigengene_Correlation2)
 	my_info("METRIC CORRELATIONS TO EIGENGENES SAVED. SAVING TRAINING PARAMETERS.")
-	CSV.write(joinpath(parameter_path_l, "Trained_Parameter_Dictionary_$(todays_date).csv"), ops2, bufsize=2^24) #, bufsize=2^24
+	CSV.write(joinpath(parameter_path_l, "Trained_Parameter_Dictionary_$(todays_date).csv"), ops2, bufsize=2^30) #, bufsize=2^24
 	UniversalModelSaver(Model, dir=model_path_l, name="Trained_Model_$(todays_date)")
 
 	return todays_date, all_subfolder_paths
@@ -3843,7 +3843,7 @@ function Align(dataFile::DataFrame, Fit_Output::DataFrame, Eigengene_Correlation
 	my_info("FIT OUTPUT SAVED. SAVING METRIC CORRELATIONS TO EIGENGENES.")
 	CSV.write(joinpath(fit_path_l, "Metric_Correlation_to_Eigengenes_$(todays_date).csv"), Eigengene_Correlation)
 	my_info("METRIC CORRELATIONS TO EIGENGENES SAVED. SAVING TRAINING PARAMETERS.")
-	CSV.write(joinpath(parameter_path_l, "Trained_Parameter_Dictionary_$(todays_date).csv"), ops, bufsize=2^25) #, bufsize=2^24
+	CSV.write(joinpath(parameter_path_l, "Trained_Parameter_Dictionary_$(todays_date).csv"), ops, bufsize=2^30) #, bufsize=2^24
 	UniversalModelSaver(Model, dir=model_path_l, name="Trained_Model_$(todays_date)")
 
 	return todays_date, all_subfolder_paths

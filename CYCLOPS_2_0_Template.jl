@@ -1,13 +1,12 @@
 using DataFrames, Statistics, StatsBase, LinearAlgebra, MultivariateStats, PyPlot, Distributed, Random, CSV, Revise, Distributions, Dates, MultipleTesting
 
-base_path = joinpath(homedir(), "", "") # define the base path in which the data file, the seed gene list, and the sample collection time file are located
-data_path = joinpath(base_path, "") # path for data folder in base folder
-path_to_cyclops = joinpath(base_path, "") # path to CYCLOPS.jl
-output_path = joinpath(base_path, "") # real training run output folder in base folder
+base_path = "/home/azureuser/CYCLOPS-2.0"
+data_path = "/home/azureuser/CYCLOPS-2.0/data/GSE261698_Aged_Astrocyte"
+path_to_cyclops = joinpath(base_path, "CYCLOPS.jl")
+output_path = joinpath(base_path, "output")
 
-expression_data = CSV.read(joinpath(data_path, ""), DataFrame) # load data file in data folder
-
-seed_genes = [] # vector of strings containing gene symbols matching the format of gene symbols in the first column of the expression_data dataframe.
+expression_data = CSV.read(joinpath(data_path, "expression.csv"), DataFrame)
+seed_genes = readlines(joinpath(data_path, "seed_genes.txt"))
 
 sample_ids_with_collection_times = [] # sample ids for which collection times exist
 sample_collection_times = [] # colletion times for sample ids
@@ -98,7 +97,10 @@ training_parameters = Dict(:regex_cont => r".*_C",			# What is the regex match f
 :plot_p_cutoff => 0.05)
 
 Distributed.addprocs(length(Sys.cpu_info()))
-@everywhere include(path_to_cyclops)
+@everywhere begin
+    path_to_cyclops = "/home/xuzhen/CYCLOPS-2.0/CYCLOPS.jl"
+    include(path_to_cyclops)
+end
 
 # real training run
 training_parameters[:align_genes] = CYCLOPS.human_homologue_gene_symbol[CYCLOPS.human_homologue_gene_symbol .!= "RORC"]
