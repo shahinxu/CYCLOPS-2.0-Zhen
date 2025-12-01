@@ -1,7 +1,7 @@
 using DataFrames, Statistics, StatsBase, LinearAlgebra, MultivariateStats, PyPlot, Distributed, Random, CSV, Revise, Distributions, Dates, MultipleTesting
 
 base_path = "/home/azureuser/CYCLOPS-2.0"
-data_path = "/home/azureuser/CYCLOPS-2.0/data/GSE261698_APP_Microglia"
+data_path = "/home/azureuser/CYCLOPS-2.0/data/GSE261698_WT_Microglia"
 path_to_cyclops = joinpath(base_path, "CYCLOPS.jl")
 output_path = joinpath(base_path, "output")
 

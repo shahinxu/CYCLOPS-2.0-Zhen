@@ -27,31 +27,24 @@ def best_align_phase_for_comparison(phase_rad, metadata_rad, step=0.1):
     aligned = (phase_rad + best_shift) % (2 * np.pi)
     return aligned, best_shift
 
-# 读取数据
-fit_output = pd.read_csv('/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_03_00/Fits/Fit_Output_2025-11-25T00_03_00.csv')
-metadata = pd.read_csv('/home/azureuser/CYCLOPS-2.0/data/GSE261698_APP_Bulk/metadata.csv')
+fit_output = pd.read_csv('/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_40_00/Fits/Fit_Output_2025-11-25T00_40_00.csv')
+metadata = pd.read_csv('/home/azureuser/CYCLOPS-2.0/data/GSE261698_WT_Microglia/metadata.csv')
 
-# 合并数据
 merged = pd.merge(fit_output[['ID', 'Phases_MA']], metadata, left_on='ID', right_on='Sample')
 
-# 将时间转换为弧度 [0, 2π]
 metadata_rad = time_to_phase(merged['Time_Hours'].values, period_hours=24.0)
 phase_rad = merged['Phases_MA'].values
 
-# 对齐相位以最大化相关性
 aligned_rad, shift = best_align_phase_for_comparison(phase_rad, metadata_rad, step=0.1)
 
-# 计算相关性
 r = float(pearsonr(aligned_rad, metadata_rad)[0])
 spearman_R = float(spearmanr(aligned_rad, metadata_rad)[0])
 r2 = r * r if np.isfinite(r) else float('nan')
 
-# 创建输出目录 - 保存到对应的 CYCLOPS 输出文件夹中
-base_output_dir = '/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_03_00'
+base_output_dir = '/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_40_00'
 out_dir = os.path.join(base_output_dir, 'phase_vs_metadata')
 os.makedirs(out_dir, exist_ok=True)
 
-# 创建图形
 plt.figure(figsize=(8, 7))
 plt.grid(True, linestyle='-')
 plt.scatter(metadata_rad, aligned_rad, c='b', s=100)
