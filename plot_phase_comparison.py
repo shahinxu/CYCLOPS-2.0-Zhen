@@ -27,8 +27,8 @@ def best_align_phase_for_comparison(phase_rad, metadata_rad, step=0.1):
     aligned = (phase_rad + best_shift) % (2 * np.pi)
     return aligned, best_shift
 
-fit_output = pd.read_csv('/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_40_00/Fits/Fit_Output_2025-11-25T00_40_00.csv')
-metadata = pd.read_csv('/home/azureuser/CYCLOPS-2.0/data/GSE261698_WT_Microglia/metadata.csv')
+fit_output = pd.read_csv('/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-12-01T22_27_00/Fits/Fit_Output_2025-12-01T22_27_00.csv')
+metadata = pd.read_csv('/home/azureuser/CYCLOPS-2.0/GSE54652/white_adipose/metadata.csv')
 
 merged = pd.merge(fit_output[['ID', 'Phases_MA']], metadata, left_on='ID', right_on='Sample')
 
@@ -41,7 +41,7 @@ r = float(pearsonr(aligned_rad, metadata_rad)[0])
 spearman_R = float(spearmanr(aligned_rad, metadata_rad)[0])
 r2 = r * r if np.isfinite(r) else float('nan')
 
-base_output_dir = '/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-11-25T00_40_00'
+base_output_dir = '/home/azureuser/CYCLOPS-2.0/output/CYCLOPS_2025-12-01T22_27_00'
 out_dir = os.path.join(base_output_dir, 'phase_vs_metadata')
 os.makedirs(out_dir, exist_ok=True)
 
