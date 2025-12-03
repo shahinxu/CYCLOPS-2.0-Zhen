@@ -1700,13 +1700,13 @@ end
 
 function GeneLevelCutoffs(dataFile::DataFrame, genesOfInterest, options)
 	
-	geneColumnNoCov = dataFile[options[:o_fxr]:end, 1] # Update the gene column to only include gene symbols
+	geneColumnNoCov = uppercase.(string.(dataFile[options[:o_fxr]:end, 1])) # Update the gene column to only include gene symbols (convert to uppercase)
 	expressionData = MakeFloat(dataFile[options[:o_fxr]:end, 2:end], Float64)
 	
 	# println("Size of expression data is $(size(expressionData, 1)) rows and $(size(expressionData, 2)) columns.")
 	mthGeneMeanCutoff = sort(mean(expressionData, dims = 2), dims = 1, rev = true)[options[:seed_mth_Gene] + 1]
 	
-	genesOfInterestIndices = findXinY(genesOfInterest, geneColumnNoCov)
+	genesOfInterestIndices = findXinY(uppercase.(string.(genesOfInterest)), geneColumnNoCov)
 	genesOfInterestExpressionData = expressionData[genesOfInterestIndices, :]
 	
 	genesOfInterestMeans = mean(genesOfInterestExpressionData, dims = 2)
@@ -1886,7 +1886,10 @@ end
 
 function findXinY(search_x, in_y)
 	@debug "Using the map function, finding the index of search_x in_y in the order they appear in search_x."
-	indices = vcat(map(z -> findall(in([z]), in_y), search_x)...)
+	# Convert both to uppercase for case-insensitive matching
+	search_x_upper = uppercase.(string.(search_x))
+	in_y_upper = uppercase.(string.(in_y))
+	indices = vcat(map(z -> findall(in([z]), in_y_upper), search_x_upper)...)
 	return indices
 end
 
