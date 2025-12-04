@@ -1,7 +1,7 @@
 using DataFrames, Statistics, StatsBase, LinearAlgebra, MultivariateStats, PyPlot, Distributed, Random, CSV, Revise, Distributions, Dates, MultipleTesting
 
-base_path = "D:\\CriticalFile\\projects\\Circadian\\CYCLOPS-2.0"
-data_path = "D:\\CriticalFile\\projects\\Circadian\\CYCLOPS-2.0\\data\\GSE261698_Aged_Astrocyte"
+base_path = "./"
+data_path = "./data/Zhang_CancerCell_2025_sub/CD4Tcell"
 path_to_cyclops = joinpath(base_path, "CYCLOPS.jl")
 output_path = joinpath(base_path, "output")
 
@@ -23,7 +23,7 @@ training_parameters = Dict(:regex_cont => r".*_C",			# What is the regex match f
 
 :seed_min_CV => 0.0, 							# The minimum coefficient of variation a gene of interest may have to be included in eigen gene transformation
 :seed_max_CV => 0.9, 							# The maximum coefficient of a variation a gene of interest may have to be included in eigen gene transformation
-:seed_mth_Gene => 10000, 						# The minimum mean a gene of interest may have to be included in eigen gene transformation
+:seed_mth_Gene => 5000, 						# The minimum mean a gene of interest may have to be included in eigen gene transformation
 
 :norm_gene_level => true, 						# Does mean normalization occur at the seed gene level
 :norm_disc => false, 							# Does batch mean normalization occur at the seed gene level
@@ -98,7 +98,7 @@ training_parameters = Dict(:regex_cont => r".*_C",			# What is the regex match f
 
 Distributed.addprocs(length(Sys.cpu_info()))
 @everywhere begin
-    path_to_cyclops = "D:\\CriticalFile\\projects\\Circadian\\CYCLOPS-2.0\\CYCLOPS.jl"
+    path_to_cyclops = "./CYCLOPS.jl"
     include(path_to_cyclops)
 end
 
