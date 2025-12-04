@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-DATA_DIR="${1:-./data}"
+DATA_DIR="${1:-/home/rzh/zhenx/circadian/data}"
 RESULTS_DIR="./results"
 
 [ ! -d "$DATA_DIR" ] && echo "Error: $DATA_DIR not found" && exit 1
