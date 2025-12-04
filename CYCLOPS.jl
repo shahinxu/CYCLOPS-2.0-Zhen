@@ -2845,16 +2845,8 @@ function OutputFolders(ouput_path, ops)
 	println("\tCREATING OUTPUT FOLDER\n\n")
 	CheckPath!(ouput_path)
 	todays_date = replace(string(floor(now(), Dates.Minute(1))), ":"=>"_")
-	master_output_folder_path = joinpath(ouput_path, join(["CYCLOPS", todays_date], "_"))
-	master_output_folder_path = CheckPath(master_output_folder_path)
-	println("\tOUTPUTS WILL BE SAVED IN $(master_output_folder_path)\n\n")
-	all_subfolder_paths = Array{Any}([])
-	# subfolders is a constant defined within the CYCLOPS module as const subfolders = ["Plots", "Fits", "Models", "Parameters"]
-	for folder_name in subfolders
-		sub_output_folder_path = joinpath(master_output_folder_path, folder_name)
-		CheckPath!(sub_output_folder_path)
-		append!(all_subfolder_paths, [sub_output_folder_path])
-	end
+	println("\tOUTPUTS WILL BE SAVED IN $(ouput_path)\n\n")
+	all_subfolder_paths = fill(ouput_path, length(subfolders))
 	return todays_date, all_subfolder_paths
 end
 
